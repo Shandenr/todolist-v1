@@ -12,6 +12,8 @@ const app = express();
 let items = ["Buy Food", "Prepare Food", "Cook Food", "Eat Food"];
 // set an empty array for new work items
 let workItems = ["Show Up", "Get Settled"];
+let funItems = ["Hang out with friend", "Ride a bike"]
+let weekendItems = ["Attend Meeting", "Grocery Shopping"]
 
 // set EJS as the viewing engine to display html
 app.set('view engine', 'ejs');
@@ -43,7 +45,16 @@ app.post("/", function(req, res) {
     if (req.body.list === "Work") {
         workItems.push(item);
         res.redirect("/work");
-    } else {
+    } 
+    else if (req.body.list === "Fun") {
+        funItems.push(item); 
+        res.redirect("/fun"); 
+    }
+    else if (req.body.list === "Weekend") {
+        weekendItems.push(item); 
+        res.redirect("/weekend");
+    }
+    else {
         items.push(item);
         res.redirect("/");
     }
@@ -52,6 +63,14 @@ app.post("/", function(req, res) {
 // display default to do list on the localhost:3000/work route!
 app.get("/work", function(req, res){
     res.render("list", {listTitle: "Work To Do List", newListItems: workItems})
+});
+
+app.get("/fun", function(req, res){
+    res.render("list", {listTitle: "Fun To Do List", newListItems: funItems})
+});
+
+app.get("/weekend", function(req, res){
+    res.render("list", {listTitle: "Weekend To Do List", newListItems: weekendItems})
 });
 
 app.listen(3000, function() {
